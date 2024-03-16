@@ -1,0 +1,103 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+   <link rel="stylesheet" href="static/css/style.css" />
+   <script src="static/lib/htmx.min.js"></script>
+   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+   <title>Parti Libéral Français - FAQ</title>
+  </head>
+  <body>
+    <div id="head">
+      <div id="logo">
+        <img src="static/images/piaf.svg" alt="Logo Parti Libéral Français" />
+      </div>
+      <h1>Parti Libéral Français</h1>
+      {{^login}}
+      <!-- div>
+          <div class="row justify-content-center">
+              <div class="col-md-6 col-sm-8 col-12">
+                  <div class="login-container">
+                      <div class="card-header">
+                          <h3 class="text-center">Identification</h3>
+                      </div>
+                      <div class="card-body">
+                          <form>
+                              <div class="form-group">
+                                  <label for="username">Identifiant:</label>
+                                  <input hx-validate="true" required name="login" type="text" class="form-control" id="username" placeholder="Entrer identifiant">
+                              </div>
+                              <div class="form-group">
+                                  <label for="password">Mot de passe:</label>
+                                  <input required name="password" type="password" class="form-control" id="password" placeholder="Entrer Mot de Passe">
+                              </div>
+                              <div class="text-center">
+                                <a hx-validate="true" hx-post="/login" hx-swap="none" type="button" value="S'identifier" class="btn btn-primary btn-block">S'identifier</a>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div -->
+      {{/login}}
+      {{#login}}
+      <div id="faq">
+        {{#allQr}}
+        <div id="QR-{{rowid}}" class="container">
+          <h2>{{question}}</h2>
+          {{^back}}
+          <pre><span>{{reponse}}</span></pre>
+          {{/back}}
+          {{#back}}
+          <!-- div class="container">
+              <form>
+               <div>
+                <textarea name="reponse-{{rowid}}" rows=10 cols=50>{{reponse}}</textarea>
+               </div>
+               <div>
+                <span>&nbsp Afficher : &nbsp <input type="checkbox" name="reponse_valide-{{rowid}}" {{#reponse_valide}}checked{{/reponse_valide}} hx-put="/question/{{rowid}}" hx-swap="none"></input></span>
+                 <span>&nbsp <input type="button" value="Supprimer" hx-delete="/question/{{rowid}}" hx-swap="delete" hx-target="#QR-{{rowid}}"</input></span>
+               </div>
+              </form>
+            </div -->
+          {{/back}}
+        </div>
+        {{/allQr}}
+        {{#askQuestion}}
+        <div id="askQuestion" class="container">
+          <h2>Posez votre question :</h2>
+          <form>
+            <input type="hidden" value="{{numQuestion}}" name="numQuestion"/>
+            <input required type="text" name="input-question" size="55" length="10" maxlength="200" placeholder="Votre question ..."></input>
+            <div class="g-recaptcha" data-sitekey="{{captchaClient}}"></div>
+            <a hx-validate="true" class="button" hx-target="#askQuestion" hx-post="/question">Poser la  question</a>
+          </form>
+        </div>
+        {{/askQuestion}}
+      </div>
+      {{/login}}
+    </div>
+    <script>
+
+    document.body.addEventListener('htmx:beforeRequest', (event)=>{
+    const response = grecaptcha.getResponse();
+    if (response.length === 0) {
+        event.preventDefault();
+        alert("Merci de bien vouloir cocher la case 'Je ne suis pas un robot'.");
+    }
+  });
+
+    </script>
+  </body>
+</html>

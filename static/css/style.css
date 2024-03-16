@@ -1,0 +1,257 @@
+@font-face {
+  font-family: "SansSerifFLF Demibold";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("SansSerifFLF Demibold"),
+    url("../fonts/SansSerifFLF-Demibold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SansSerifFLF Medium";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("SansSerifFLF Medium"),
+    url("../fonts/SansSerifFLF.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SansSerifFLF Medium Italic";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("SansSerifFLF Medium Italic"),
+    url("../fonts/SansSerifFLF-DemiItalic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SansSerifFLF Italic";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("SansSerifFLF Italic"),
+    url("../fonts/SansSerifFLF-Italic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SansSerifBldFLF Medium";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("SansSerifBldFLF Medium"),
+    url("../fonts/SansSerifBldFLF.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SansSerifBldFLFCond Medium";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("SansSerifBldFLFCond Medium"),
+    url("../fonts/SansSerifBldFLFCond.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SansSerifBookFLF Medium";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("SansSerifBookFLF Medium"),
+    url("../fonts/SansSerifBookFLF.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SansSerifExbFLF Medium";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("SansSerifExbFLF Medium"),
+    url("../fonts/SansSerifExbFLF.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SansSerifExbFLFCond Medium";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("SansSerifExbFLFCond Medium"),
+    url("../fonts/SansSerifExbFLFCond.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SansSerifBldFLF-Italic Italic";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("SansSerifBldFLF-Italic Italic"),
+    url("../fonts/SansSerifBldFLF-Italic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SansSerifBldFLFCond Italic";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("SansSerifBldFLFCond Italic"),
+    url("../fonts/SansSerifBldFLFCond-Italic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SansSerifBookFLF Italic";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("SansSerifBookFLF Italic"),
+    url("../fonts/SansSerifBookFLF-Italic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SansSerifExbFLF Italic";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("SansSerifExbFLF Italic"),
+    url("../fonts/SansSerifExbFLF-Italic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "SansSerifExbFLFCond Italic";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("SansSerifExbFLFCond Italic"),
+    url("../fonts/SansSerifExbFLFCond-Italic.woff") format("woff");
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4rem;
+}
+
+body {
+  background-color: #0c0f19;
+  color: white;
+}
+
+.saffron-color {
+  color: #e9c53d;
+}
+.login-container {
+  background-color: #003340;
+  text-align: left;
+  border-radius: 10px;
+}
+#head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#head #logo img {
+  width: 128px;
+}
+
+#head h1 {
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(1, 51, 64, 1) 15%,
+    rgba(2, 193, 173, 1) 41%,
+    rgba(233, 196, 61, 1) 70%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  font-family: "SansSerifBldFLF Medium", var(--bs-font-sans-serif);
+}
+
+#head #networks {
+  margin-bottom: 10px;
+}
+
+#head #networks ul {
+  list-style: none;
+  padding-left: 0px !important;
+}
+
+#head #networks ul li {
+  display: inline-block;
+  padding: 15px;
+}
+
+@media (max-width: 768px) {
+  #head #networks ul li {
+    display: block;
+  }
+}
+
+#head #networks ul li a {
+  text-decoration: none;
+  color: white;
+}
+
+#head #networks ul li a img {
+  -webkit-filter: brightness(0) invert(1);
+  -moz-filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1);
+  position: relative;
+  top: -1px;
+}
+
+a.button {
+  background: linear-gradient(
+    90deg,
+    rgba(1, 51, 64, 1) 0%,
+    rgba(2, 193, 173, 1) 100%
+  );
+  background-size: 150% auto;
+  text-decoration: none;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  transition: 0.5s;
+}
+
+a:hover.button {
+  background-position: right center;
+}
+
+#faq {
+  text-align: justify;
+  margin-bottom: 35px;
+}
+#faq div {
+}
+
+#faq div.g-recaptcha {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+#faq h2 {
+  color: #05c1ad;
+  margin: 15px 0px;
+  font-family: "SansSerifBldFLF Medium", var(--bs-font-sans-serif);
+}
+
+#faq div.container {
+  position: relative;
+  margin-bottom: 15px;
+  padding: 45px;
+}
+
+#faq div.container:nth-of-type(2n-1) {
+  background-color: #003340;
+}
+#faq div.container pre {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-x: hidden;
+}
+#faq div.container pre span {
+  font-family: "SansSerifBldFLF Demibold";
+  font-size: medium;
+}
