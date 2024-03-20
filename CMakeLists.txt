@@ -13,6 +13,7 @@ add_subdirectory(lib/SQLiteCpp)
 find_package(OpenSSL REQUIRED)
 
 include_directories("${PROJECT_SOURCE_DIR}/lib")
+include_directories("${PROJECT_SOURCE_DIR}/include")
 
 # Ajoute l'exécutable
 add_executable(foieq main.cpp)
