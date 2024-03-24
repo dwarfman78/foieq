@@ -21,10 +21,10 @@ Ce serveur sert une page de FAQ (Frequently Asked Question) dynamique basée sur
 
 # Compilation
 
-Placez vous dans le dossier `lib/Crow/build` et lancez la commande suivante :  
+Placez vous dans le dossier `lib/Crow/build` (si nécessaire créer le dossier) et lancez la commande suivante :  
 `cmake .. -DCROW_BUILD_EXAMPLES=OFF -DCROW_BUILD_TESTS=OFF`  
 puis  
-`make install`
+`make install` (peut nécessiter les droits root)
 
 Placez vous dans le dossier racine et lancez la commande suivante :  
 `cmake .`  
@@ -64,6 +64,10 @@ Exemple de configuration (config.json):
 **privateKey** : la clé privée RSA générée dans la console Google Cloud qui permet de signer le jeton JWT  
 pour récupérer la clé OAUTH2 de modification de la feuille.
 
+# Lancement
+
+```./foieq config.json```  
+
 # Docker
 
 Assurez-vous que le dossier `lib/Crow/build` est vide puis lancez la commande :  
@@ -75,4 +79,3 @@ Lancement :
 # URL
 
 `http://localhost:18080/faq`
-
