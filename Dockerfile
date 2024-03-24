@@ -9,7 +9,7 @@ RUN apk update && \
 
 WORKDIR /foieq
 
-COPY *.hpp ./
+COPY include/*.hpp ./
 COPY *.cpp ./
 COPY lib ./lib
 COPY templates ./templates
