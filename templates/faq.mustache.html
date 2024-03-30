@@ -23,55 +23,11 @@
         <img src="static/images/piaf.svg" alt="Logo Parti Libéral Français" />
       </div>
       <h1>Parti Libéral Français</h1>
-      {{^login}}
-      <!-- div>
-          <div class="row justify-content-center">
-              <div class="col-md-6 col-sm-8 col-12">
-                  <div class="login-container">
-                      <div class="card-header">
-                          <h3 class="text-center">Identification</h3>
-                      </div>
-                      <div class="card-body">
-                          <form>
-                              <div class="form-group">
-                                  <label for="username">Identifiant:</label>
-                                  <input hx-validate="true" required name="login" type="text" class="form-control" id="username" placeholder="Entrer identifiant">
-                              </div>
-                              <div class="form-group">
-                                  <label for="password">Mot de passe:</label>
-                                  <input required name="password" type="password" class="form-control" id="password" placeholder="Entrer Mot de Passe">
-                              </div>
-                              <div class="text-center">
-                                <a hx-validate="true" hx-post="/login" hx-swap="none" type="button" value="S'identifier" class="btn btn-primary btn-block">S'identifier</a>
-                              </div>
-                          </form>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div -->
-      {{/login}}
-      {{#login}}
       <div id="faq">
         {{#allQr}}
         <div id="QR-{{rowid}}" class="container">
           <h2>{{question}}</h2>
-          {{^back}}
           <pre><span>{{reponse}}</span></pre>
-          {{/back}}
-          {{#back}}
-          <!-- div class="container">
-              <form>
-               <div>
-                <textarea name="reponse-{{rowid}}" rows=10 cols=50>{{reponse}}</textarea>
-               </div>
-               <div>
-                <span>&nbsp Afficher : &nbsp <input type="checkbox" name="reponse_valide-{{rowid}}" {{#reponse_valide}}checked{{/reponse_valide}} hx-put="/question/{{rowid}}" hx-swap="none"></input></span>
-                 <span>&nbsp <input type="button" value="Supprimer" hx-delete="/question/{{rowid}}" hx-swap="delete" hx-target="#QR-{{rowid}}"</input></span>
-               </div>
-              </form>
-            </div -->
-          {{/back}}
         </div>
         {{/allQr}}
         {{#askQuestion}}
@@ -86,7 +42,6 @@
         </div>
         {{/askQuestion}}
       </div>
-      {{/login}}
     </div>
     <script>
 

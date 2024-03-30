@@ -5,59 +5,21 @@
 #include <crow.h>
 #include <crow/mustache.h>
 using json = nlohmann::json;
-/*
- * Méthode permettant de vérifier si l'utilisateur à l'origine de la requête est authentifié.
- */
-bool userAuthenticated(const crow::request &request, SecurityManager &sm)
-{
-    // on récupère le cookie dans la requete.
-    auto cookie = request.get_header_value("Cookie");
-    if (!cookie.empty())
-    {
-        std::vector<std::string> tokenz;
-        // on découpe le cookie en deux par le caractère =
-        Tools::tokenizeString(cookie, std::regex("="), tokenz);
-        // on vérifie la présence et la validité du token dans le SecurityManager.
-        return sm.checkToken(tokenz[1]);
-    }
-    return false;
-}
-/*
- * Méthode de rendu conditionnel du template faq.
- */
 crow::mustache::rendered_template populateTemplate(const std::string &route, const crow::request &request,
                                                    SecurityManager &sm, IDataAccess &dataAccess)
 {
     crow::mustache::context ctx;
 
     std::optional<std::vector<FAQRow>> allQr;
-    // route pour le back office (non utilisé avec google sheet utilisé seulement avec sqlite).
-    if (route == "/back")
-    {
-        if (userAuthenticated(request, sm))
-        {
-            allQr = dataAccess.getAll();
-            ctx["back"] = "true";
-            ctx["login"] = "true";
-        }
-        else
-        {
-        }
-    }
-    else
-    {
-        // on considère l'utilisateur comme toujours authentifié pour le front.
-        ctx["login"] = "true";
-        // clé captchaClient pour génération d'un gToken via le widget recaptcha.
-        ctx["captchaClient"] = sm.getCaptchaClient();
-        // détermine si l'ip du client a le droit de poser une question, si oui on affiche le champ,
-        // si non on le masque.
-        if (sm.showAskQuestion(request.remote_ip_address))
-            ctx["askQuestion"] = "true";
+    // clé captchaClient pour génération d'un gToken via le widget recaptcha.
+    ctx["captchaClient"] = sm.getCaptchaClient();
+    // détermine si l'ip du client a le droit de poser une question, si oui on affiche le champ,
+    // si non on le masque.
+    if (sm.showAskQuestion(request.remote_ip_address))
+        ctx["askQuestion"] = "true";
 
-        // récupération de toutes les Q/R validées.
-        allQr = dataAccess.getAllValidated();
-    }
+    // récupération de toutes les Q/R validées.
+    allQr = dataAccess.getAllValidated();
 
     if (allQr.has_value())
     {
@@ -113,12 +75,18 @@ int main(int argc, char *argv[])
 
         // Défintion des routes HTTP.
         //
+        //
+        //
+        //
+        //
+        //
         //  Route principale de la faq, sert à afficher la liste des questions/réponses et éventuellement le formulaire
         //  de saisie d'une question.
         CROW_ROUTE(app, "/faq")
         ([&sm, &dataAccess](const crow::request &request) {
             return populateTemplate("/faq", request, sm, dataAccess);
         });
+
         // Route permettant d'ajouter une question dans le stockage.
         CROW_ROUTE(app, "/question").methods(crow::HTTPMethod::Post)([&dataAccess, &sm](const crow::request &req) {
             std::string retour = "Erreur.";
@@ -167,73 +135,6 @@ int main(int argc, char *argv[])
             }
             return retour;
         });
-        // les routes du back office ont été désactivées car on utilise désormais google doc à la place de sqlite.
-        //
-        //
-        //
-        //
-        //
-        //
-        // =========================================================================================================
-        /*   CROW_ROUTE(app, "/login").methods(crow::HTTPMethod::Post)([&sm](const crow::request &req) {
-               auto bodyParams = req.get_body_params();
-               auto authentication = sm.authenticate(bodyParams.get("login"), bodyParams.get("password"));
-
-               crow::response reponse;
-
-               if (authentication.has_value())
-               {
-                   reponse.set_header("Set-Cookie", "session_id=" + authentication.value() +
-                                                        "; HttpOnly; Secure; SameSite=Lax; Max-Age=1800;");
-                   reponse.set_header("HX-Redirect", "/back");
-               }
-               else
-               {
-                   reponse.code = 403;
-               }
-               return reponse;
-           });*/
-        // define your endpoint at the root directory
-
-        /*CROW_ROUTE(app, "/back")
-            .methods(crow::HTTPMethod::Get, crow::HTTPMethod::Post)([&sm, &dataAccess](const crow::request &request) {
-                return populateTemplate("/back", request, sm, dataAccess);
-            });
-
-        CROW_ROUTE(app, "/question/<int>")
-            .methods(crow::HTTPMethod::Delete)([&sm, &dataAccess](const crow::request &req, int rowid) {
-                if (userAuthenticated(req, sm))
-                {
-                    if (dataAccess.deleteQuestion(rowid))
-                    {
-                        return crow::response(200);
-                    }
-                }
-                return crow::response(400);
-            });*/
-
-        /*CROW_ROUTE(app, "/question/<int>")
-            .methods(crow::HTTPMethod::Put)([&sm, &dataAccess](const crow::request &req, int rowid) {
-                if (userAuthenticated(req, sm))
-                {
-                    auto bodyParams = req.get_body_params();
-                    auto keys = bodyParams.keys();
-
-                    if (dataAccess.updateQuestion(
-                            rowid, bodyParams.get("reponse-" + std::to_string(rowid)),
-                            std::count(keys.begin(), keys.end(), "reponse_valide-" + std::to_string(rowid)) > 0 ? true
-                                                                                                                :
-           false))
-                    {
-                        return crow::response(200);
-                    }
-                }
-                return crow::response(400);
-            });*/
-        // ==============================================================================================================================
-        //
-        //
-        //
         // Démarrage du serveur http.
         app.port(18080).multithreaded().run();
     }
