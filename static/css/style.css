@@ -167,6 +167,8 @@ body {
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
   font-family: "SansSerifBldFLF Medium", var(--bs-font-sans-serif);
+  margin-bottom: 1.5em;
+  margin-top: 1.5em;
 }
 
 #head #networks {
