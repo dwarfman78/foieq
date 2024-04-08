@@ -2,6 +2,7 @@
 #include "IDataAccess.hpp"
 #include "SecurityManager.hpp"
 #include "Tools.hpp"
+#include "dylib/include/dylib.hpp"
 #include <crow.h>
 #include <crow/mustache.h>
 using json = nlohmann::json;
@@ -85,6 +86,15 @@ int main(int argc, char *argv[])
         CROW_ROUTE(app, "/faq")
         ([&sm, &dataAccess](const crow::request &request) {
             return populateTemplate("/faq", request, sm, dataAccess);
+        });
+        CROW_ROUTE(app, "/dynamic")
+        ([&sm, &dataAccess](const crow::request &request) {
+            // do some dynamic stuff here
+            dylib lib("./lib/foieq", "foieq");
+
+            auto handleDynamic = lib.get_function<std::string()>("handleDynamic");
+
+            return handleDynamic();
         });
 
         // Route permettant d'ajouter une question dans le stockage.

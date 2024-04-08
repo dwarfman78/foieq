@@ -12,22 +12,22 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-   <link rel="stylesheet" href="faq/static/css/style.css?v=1.1" />
-   <script src="faq/static/lib/htmx.min.js"></script>
+   <link rel="stylesheet" href="static/css/style.css?v=1.1" />
+   <script src="static/lib/htmx.min.js"></script>
    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
    <title>Parti Libéral Français - FAQ</title>
   </head>
   <body>
     <div id="head">
       <div id="logo">
-	      <a href="https://partiliberalfrancais.fr"><img src="faq/static/images/piaf.svg" alt="Logo Parti Libéral Franais"></a>
+	      <a href="https://partiliberalfrancais.fr"><img src="static/images/piaf.svg" alt="Logo Parti Libéral Franais"></a>
       </div>
       <h1>Parti Libéral Français</h1>
       <div id="faq">
         {{#allQr}}
         <div id="QR-{{rowid}}" class="container">
           <h2>{{question}}</h2>
-          <pre><span>{{reponse}}</span></pre>
+          <pre><span>{{{reponse}}}</span></pre>
         </div>
         {{/allQr}}
         {{#askQuestion}}
