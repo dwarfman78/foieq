@@ -1,59 +1,37 @@
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-   <link rel="stylesheet" href="faq/static/css/style.css?v=1.1" />
-   <script src="faq/static/lib/htmx.min.js"></script>
-   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-   <title>Parti Libéral Français - FAQ</title>
-  </head>
-  <body>
-    <div id="head">
-      <div id="logo">
-	      <a href="https://partiliberalfrancais.fr"><img src="faq/static/images/piaf.svg" alt="Logo Parti Libéral Franais"></a>
-      </div>
-      <h1>Parti Libéral Français</h1>
-      <div id="faq">
-        {{#allQr}}
-        <div id="QR-{{rowid}}" class="container">
-          <h2>{{question}}</h2>
-          <pre><span>{{reponse}}</span></pre>
-        </div>
-        {{/allQr}}
-        {{#askQuestion}}
-        <div id="askQuestion" class="container">
-          <h2>Posez votre question :</h2>
-          <form>
-            <input type="hidden" value="{{numQuestion}}" name="numQuestion"/>
-            <input required type="text" name="input-question" size="55" length="10" maxlength="200" placeholder="Votre question ..."></input>
-            <div class="g-recaptcha" data-sitekey="{{captchaClient}}"></div>
-            <a hx-validate="true" class="button" hx-target="#askQuestion" hx-post="/question">Poser la  question</a>
-	    &nbsp;<a href="https://partiliberalfrancais.fr" class="button">Retour au site</a>
-          </form>
-        </div>
-        {{/askQuestion}}
-      </div>
-    </div>
-    <script>
-
-    document.body.addEventListener('htmx:beforeRequest', (event)=>{
-    const response = grecaptcha.getResponse();
-    if (response.length === 0) {
-        event.preventDefault();
-        alert("Merci de bien vouloir cocher la case 'Je ne suis pas un robot'.");
+{{#allQr}}
+<section>
+ <div id="QR-{{rowid}}" class="container">
+   <h2>{{question}}</h2>
+   <pre><span>{{{reponse}}}</span></pre>
+ </div>
+</section>
+{{/allQr}}
+{{#askQuestion}}
+<section>
+ <div id="askQuestion" class="container">
+   <h2>Posez votre question :</h2>
+   <form>
+     <input type="hidden" value="{{numQuestion}}" name="numQuestion"/>
+     <input required type="text" name="input-question" size="55" length="10" maxlength="200" placeholder="Votre question ..."></input>
+     <div class="g-recaptcha" data-sitekey="{{captchaClient}}"></div>
+       <a id="buttonAddQuestion" hx-validate="true" class="button" hx-target="#askQuestion" hx-post="/question">Poser la  question</a>
+   </form>
+ </div>
+</section>
+{{/askQuestion}}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+  function handleButtonAddQuestion(event)
+  {
+    if (event.detail.elt.id === "buttonAddQuestion") {
+       const response = grecaptcha.getResponse();
+       if (response.length === 0) {
+          event.preventDefault();
+            alert(
+              "Merci de bien vouloir cocher la case 'Je ne suis pas un robot'.",
+            );
+       }
     }
-  });
-
-    </script>
-  </body>
-</html>
+  }
+  mapHandlers.set('buttonAddQuestion',handleButtonAddQuestion);
+</script>
