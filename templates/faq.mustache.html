@@ -1,37 +1,47 @@
-{{#allQr}}
-<section>
- <div id="QR-{{rowid}}" class="container">
-   <h2>{{question}}</h2>
-   <pre><span>{{{reponse}}}</span></pre>
- </div>
-</section>
-{{/allQr}}
-{{#askQuestion}}
-<section>
- <div id="askQuestion" class="container">
-   <h2>Posez votre question :</h2>
-   <form>
-     <input type="hidden" value="{{numQuestion}}" name="numQuestion"/>
-     <input required type="text" name="input-question" size="55" length="10" maxlength="200" placeholder="Votre question ..."></input>
-     <div class="g-recaptcha" data-sitekey="{{captchaClient}}"></div>
-       <a id="buttonAddQuestion" hx-validate="true" class="button" hx-target="#askQuestion" hx-post="/question">Poser la  question</a>
-   </form>
- </div>
-</section>
-{{/askQuestion}}
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script>
-  function handleButtonAddQuestion(event)
-  {
-    if (event.detail.elt.id === "buttonAddQuestion") {
-       const response = grecaptcha.getResponse();
-       if (response.length === 0) {
-          event.preventDefault();
-            alert(
-              "Merci de bien vouloir cocher la case 'Je ne suis pas un robot'.",
-            );
-       }
+<div id="faqAccordion" class="accordion accordion-flush" data-bs-theme="dark">
+  {{#allQr}}
+  <section>
+   <div id="QR-{{rowid}}" class="container">
+      <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#QR-body-{{rowid}}" aria-controls="QR-body-{{rowid}}">{{question}}</button></h2>
+      <div id="QR-body-{{rowid}}" class="accordion-collapse collapse"><div class="accordion-body"><pre><span>{{{reponse}}}</span></pre></div></div>
+   </div>
+  </section>
+  {{/allQr}}
+  {{#askQuestion}}
+  <section>
+   <div id="askQuestion" class="container">
+     <h2>Posez votre question :</h2>
+     <form>
+       <input type="hidden" value="{{numQuestion}}" name="numQuestion"/>
+       <input required type="text" name="input-question" size="55" length="10" maxlength="200" placeholder="Votre question ..."></input>
+       <div class="g-recaptcha" data-sitekey="{{captchaClient}}"></div>
+         <a id="buttonAddQuestion" hx-validate="true" class="button" hx-target="#askQuestion" hx-post="/question">Poser la  question</a>
+     </form>
+   </div>
+  </section>
+  {{/askQuestion}}
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script>
+    function handleButtonAddQuestion(event)
+    {
+      if (event.detail.elt.id === "buttonAddQuestion") {
+         const response = grecaptcha.getResponse();
+         if (response.length === 0) {
+            event.preventDefault();
+              alert(
+                "Merci de bien vouloir cocher la case 'Je ne suis pas un robot'.",
+              );
+         }
+      }
     }
-  }
-  mapHandlers.set('buttonAddQuestion',handleButtonAddQuestion);
-</script>
+    mapHandlers.set('buttonAddQuestion',handleButtonAddQuestion);
+    
+    //this code WILL break, worst thing i've ever written.
+    const pointedQuestion = document.getElementById('faqAccordion').children[qIndex];
+    if(!(pointedQuestion === undefined || pointedQuestion === null))
+    {
+      pointedQuestion.children[0].children[0].children[0].click();
+      pointedQuestion.scrollIntoView();
+    }
+  </script>
+</div>
